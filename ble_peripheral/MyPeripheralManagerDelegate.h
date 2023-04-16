@@ -28,6 +28,7 @@
     CBUUID *characteristicUuid;
 }
 @property (nonatomic, assign) CBPeripheralManager* peripheralManager;
+
 @property (atomic, strong) CBCentral *currentCentral;
 @property (atomic, strong) CBMutableCharacteristic *mainCharacteristic;
 //------------------------------------------------------------------------------

@@ -25,7 +25,8 @@
     self = [super init];
     if (self)
     {
-        
+        serviceUuid = [CBUUID UUIDWithString:@"29D7544B-6870-45A4-BB7E-D981535F4525"];
+        characteristicUuid = [CBUUID UUIDWithString:@"B81672D5-396B-4803-82C2-029D34319015"];
     }
     return self;
 }
@@ -43,20 +44,20 @@
 }
 - (void)peripheralManagerIsReadyToUpdateSubscribers:(CBPeripheralManager *)peripheral
 {
-#if DEBUG_MODE
+//#if DEBUG_MODE
     printf("------------------Ready To Update\n------------------ ");
-#endif
+//#endif
 }
 //------------------------------------------------------------------------------
 - (void)peripheralManagerDidUpdateState:(CBPeripheralManager *)peripheral
 {
-#if DEBUG_MODE
+//#if DEBUG_MODE
     NSLog(@"CBPeripheralManager entered state %@", [MyPeripheralManagerDelegate stringFromCBManagerState:peripheral.state]);
-#endif
+//#endif
     if (peripheral.state == CBManagerStatePoweredOn)
     {
         NSDictionary* dict = @{
-            CBAdvertisementDataLocalNameKey: self.disc,
+            CBAdvertisementDataLocalNameKey: self.description,
             //            CBAdvertisementDataSolicitedServiceUUIDsKey: @[serviceUuid],
             CBAdvertisementDataServiceUUIDsKey: @[serviceUuid]
         };
@@ -75,9 +76,9 @@
         service.characteristics = @[_mainCharacteristic];
         [self.peripheralManager addService:service];
         [self.peripheralManager startAdvertising:dict];
-#if DEBUG_MODE
+//#if DEBUG_MODE
         NSLog(@"startAdvertising. isAdvertising: %d", self.peripheralManager.isAdvertising);
-#endif
+//#endif
     }
 }
 //------------------------------------------------------------------------------
@@ -88,9 +89,9 @@
     {
         NSLog(@"Error advertising: %@", [error localizedDescription]);
     }
-#if DEBUG_MODE
+//#if DEBUG_MODE
     NSLog(@"peripheralManagerDidStartAdvertising %d", self.peripheralManager.isAdvertising);
-#endif
+//#endif
 }
 
 //------------------------------------------------------------------------------
@@ -104,9 +105,9 @@
         NSString* description = @"ABCD";
         request.value = [description dataUsingEncoding:NSUTF8StringEncoding];
         [self.peripheralManager respondToRequest:request withResult:CBATTErrorSuccess];
-#if DEBUG_MODE
+//#if DEBUG_MODE
         NSLog(@"didReceiveReadRequest:latencyCharacteristic. Responding with %@", description);
-#endif
+//#endif
     }
     else
     {
